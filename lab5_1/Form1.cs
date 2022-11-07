@@ -7,12 +7,16 @@ namespace lab5_1
         MyRectangle myRect;
         List<BaseObject> objects = new();
         Player player;
+        Marker marker;
 
         public Form1()
         {
             InitializeComponent();
 
             player = new Player(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
+            marker = new Marker(pictureBox1.Width / 2 + 50, pictureBox1.Height / 2 + 50, 0);
+
+            objects.Add(marker);
             objects.Add(player);
 
             objects.Add(new MyRectangle(50, 50, 0));
