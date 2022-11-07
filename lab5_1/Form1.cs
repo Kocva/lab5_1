@@ -6,10 +6,15 @@ namespace lab5_1
     {
         MyRectangle myRect;
         List<BaseObject> objects = new();
+        Player player;
 
         public Form1()
         {
             InitializeComponent();
+
+            player = new Player(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
+            objects.Add(player);
+
             objects.Add(new MyRectangle(50, 50, 0));
             objects.Add(new MyRectangle(100, 100, 45));
         }
