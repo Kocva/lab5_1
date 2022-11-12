@@ -9,12 +9,15 @@ namespace lab5_1
         Marker marker;
         CollectingPoint point1;
         CollectingPoint point2;
+        BadArea area;
 
         public Form1()
         {
             InitializeComponent();
             Random rnd = new Random();
             player = new Player(pictureBox1.Width / 2, pictureBox1.Height / 2, 0, 0);
+            area = new BadArea(rnd.Next(20, 480), rnd.Next(20, 480), 0, 1);
+            objects.Add(area);
             player.OnOverlap += (p, obj) =>
             {
                 txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text;
@@ -33,6 +36,14 @@ namespace lab5_1
                 m.Size = 1;
                 txtPoints.Text = $"Очки: {pointCounter}";
             };
+            area.OnPlayerOverlap += (m) =>
+            {
+                area.X = rnd.Next(20, 480);
+                area.Y = rnd.Next(20, 480);
+                area.Size = 1;
+                pointCounter--;
+                txtPoints.Text = $"Очки: {pointCounter}";
+            };
             marker = new Marker(pictureBox1.Width / 2 + 50, pictureBox1.Height / 2 + 50, 0, 0);
 
             objects.Add(marker);
@@ -41,7 +52,7 @@ namespace lab5_1
             point2 = new CollectingPoint(rnd.Next(20, 480), rnd.Next(20, 480), 0, 1);
             objects.Add(point1);
             objects.Add(point2);
-
+            
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -51,12 +62,21 @@ namespace lab5_1
 
             updatePlayer();
             updatePoints();
+            updateArea();
             foreach (var obj in objects.ToList())
             {
                 if (obj != player && player.Overlaps(obj, g))
                 {
                     player.Overlap(obj);
                     
+                }
+            }
+            foreach (var obj in objects.ToList())
+            {
+                if (obj != area && area.Overlaps(obj, g))
+                {
+                    area.Overlap(obj);
+
                 }
             }
 
@@ -100,6 +120,11 @@ namespace lab5_1
             if (point2.Size > 0.02)
             point2.Size -= (float)0.01;
         }
+        private void updateArea()
+        {
+            area.Size += 1;
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             
