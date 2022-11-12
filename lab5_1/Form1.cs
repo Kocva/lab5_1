@@ -23,10 +23,13 @@ namespace lab5_1
                 objects.Remove(m);
                 marker = null;
             };
+            int pointCounter = 0;
             player.OnPointOverlap += (m) =>
             {
+                pointCounter++;
                 m.X = rnd.Next(20, 480);
                 m.Y = rnd.Next(20, 480);
+                txtPoints.Text = $"Очки: {pointCounter}";
             };
             marker = new Marker(pictureBox1.Width / 2 + 50, pictureBox1.Height / 2 + 50, 0);
 
@@ -34,7 +37,8 @@ namespace lab5_1
             objects.Add(player);
             
             objects.Add(new CollectingPoint(rnd.Next(20, 480), rnd.Next(20, 480), 0));
-            
+            objects.Add(new CollectingPoint(rnd.Next(20, 480), rnd.Next(20, 480), 0));
+
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)

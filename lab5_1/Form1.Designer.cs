@@ -32,6 +32,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.txtLog = new System.Windows.Forms.RichTextBox();
+            this.txtPoints = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,17 +60,26 @@
             this.txtLog.TabIndex = 1;
             this.txtLog.Text = "";
             // 
+            // txtPoints
+            // 
+            this.txtPoints.Location = new System.Drawing.Point(409, 22);
+            this.txtPoints.Name = "txtPoints";
+            this.txtPoints.Size = new System.Drawing.Size(100, 23);
+            this.txtPoints.TabIndex = 2;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(797, 537);
+            this.Controls.Add(this.txtPoints);
             this.Controls.Add(this.txtLog);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -78,5 +88,6 @@
         private PictureBox pictureBox1;
         private System.Windows.Forms.Timer timer1;
         private RichTextBox txtLog;
+        private TextBox txtPoints;
     }
 }
