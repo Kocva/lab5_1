@@ -4,15 +4,15 @@ namespace lab5_1
 {
     public partial class Form1 : Form
     {
-        MyRectangle myRect;
         List<BaseObject> objects = new();
         Player player;
         Marker marker;
+        CollectingPoint point;
 
         public Form1()
         {
             InitializeComponent();
-
+            Random rnd = new Random();
             player = new Player(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
             player.OnOverlap += (p, obj) =>
             {
@@ -23,13 +23,18 @@ namespace lab5_1
                 objects.Remove(m);
                 marker = null;
             };
+            player.OnPointOverlap += (m) =>
+            {
+                m.X = rnd.Next(20, 480);
+                m.Y = rnd.Next(20, 480);
+            };
             marker = new Marker(pictureBox1.Width / 2 + 50, pictureBox1.Height / 2 + 50, 0);
 
             objects.Add(marker);
             objects.Add(player);
-
-            objects.Add(new MyRectangle(50, 50, 0));
-            objects.Add(new MyRectangle(100, 100, 45));
+            
+            objects.Add(new CollectingPoint(rnd.Next(20, 480), rnd.Next(20, 480), 0));
+            
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -44,7 +49,7 @@ namespace lab5_1
                 if (obj != player && player.Overlaps(obj, g))
                 {
                     player.Overlap(obj);
-                    //obj.Overlap(player);
+                    
                 }
             }
 
@@ -53,9 +58,6 @@ namespace lab5_1
                 g.Transform = obj.GetTransform();
                 obj.Render(g);
             }
-            //g.Transform = myRect.GetTransform();
-
-                //myRect.Render(g);
         }
 
         private void updatePlayer()
