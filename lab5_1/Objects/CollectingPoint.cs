@@ -9,20 +9,34 @@ namespace lab5_1.Objects
 {
     internal class CollectingPoint : BaseObject
     {
-        public CollectingPoint(float x, float y, float angle) : base(x, y, angle)
+        Random rnd = new Random();
+        public CollectingPoint(float x, float y, float angle, float size) : base(x, y, angle, size)
         {
+            Size = size;
+            X = x;
+            Y = y;
         }
 
         public override void Render(Graphics g)
         {
-            g.FillEllipse(new SolidBrush(Color.Green), -20, -20, 40, 40);
+            g.FillEllipse(new SolidBrush(Color.Green), -20 * Size, -20 * Size, 40 * Size, 40 * Size);
         }
 
         public override GraphicsPath GetGraphicsPath()
         {
             var path = base.GetGraphicsPath();
-            path.AddEllipse(-20, -20, 40, 40);
+            path.AddEllipse(-20 * Size, -20 * Size, 40 * Size, 40 * Size);
             return path;
+        }
+
+        public void SizeIsNull()
+        {
+            if (Size <= 0.02)
+            {
+                Size = 1;
+                X = rnd.Next(20, 480);
+                Y = rnd.Next(20, 480);
+            }
         }
     }
 }

@@ -13,14 +13,16 @@ namespace lab5_1.Objects
         public float X;
         public float Y;
         public float Angle;
+        public float Size;
 
         public Action<BaseObject, BaseObject> OnOverlap;
 
-        public BaseObject(float x, float y, float angle)
+        public BaseObject(float x, float y, float angle, float size)
         {
             X = x;
             Y = y;
             Angle = angle;
+            Size = size;
         }
 
         public Matrix GetTransform()

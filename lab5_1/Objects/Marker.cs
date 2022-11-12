@@ -9,7 +9,7 @@ namespace lab5_1.Objects
 {
     internal class Marker : BaseObject
     {
-        public Marker(float x, float y, float angle) : base(x, y, angle)
+        public Marker(float x, float y, float angle, float size) : base(x, y, angle, size)
         {
         }
         public override void Render(Graphics g)

@@ -7,13 +7,14 @@ namespace lab5_1
         List<BaseObject> objects = new();
         Player player;
         Marker marker;
-        CollectingPoint point;
+        CollectingPoint point1;
+        CollectingPoint point2;
 
         public Form1()
         {
             InitializeComponent();
             Random rnd = new Random();
-            player = new Player(pictureBox1.Width / 2, pictureBox1.Height / 2, 0);
+            player = new Player(pictureBox1.Width / 2, pictureBox1.Height / 2, 0, 0);
             player.OnOverlap += (p, obj) =>
             {
                 txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text;
@@ -29,15 +30,17 @@ namespace lab5_1
                 pointCounter++;
                 m.X = rnd.Next(20, 480);
                 m.Y = rnd.Next(20, 480);
+                m.Size = 1;
                 txtPoints.Text = $"Очки: {pointCounter}";
             };
-            marker = new Marker(pictureBox1.Width / 2 + 50, pictureBox1.Height / 2 + 50, 0);
+            marker = new Marker(pictureBox1.Width / 2 + 50, pictureBox1.Height / 2 + 50, 0, 0);
 
             objects.Add(marker);
             objects.Add(player);
-            
-            objects.Add(new CollectingPoint(rnd.Next(20, 480), rnd.Next(20, 480), 0));
-            objects.Add(new CollectingPoint(rnd.Next(20, 480), rnd.Next(20, 480), 0));
+            point1 = new CollectingPoint(rnd.Next(20, 480), rnd.Next(20, 480), 0, 1);
+            point2 = new CollectingPoint(rnd.Next(20, 480), rnd.Next(20, 480), 0, 1);
+            objects.Add(point1);
+            objects.Add(point2);
 
         }
 
@@ -47,7 +50,7 @@ namespace lab5_1
             g.Clear(Color.White);
 
             updatePlayer();
-
+            updatePoints();
             foreach (var obj in objects.ToList())
             {
                 if (obj != player && player.Overlaps(obj, g))
@@ -87,6 +90,16 @@ namespace lab5_1
             player.X += player.vX;
             player.Y += player.vY;
         }
+
+        private void updatePoints()
+        {
+            point1.SizeIsNull();
+            point2.SizeIsNull();
+            if (point1.Size > 0.02)
+            point1.Size -= (float)0.01;
+            if (point2.Size > 0.02)
+            point2.Size -= (float)0.01;
+        }
         private void timer1_Tick(object sender, EventArgs e)
         {
             
@@ -97,7 +110,7 @@ namespace lab5_1
         {
             if (marker == null)
             {
-                marker = new Marker(0, 0, 0);
+                marker = new Marker(0, 0, 0, 0);
                 objects.Add(marker);
             }
             marker.X = e.X;

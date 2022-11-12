@@ -13,7 +13,7 @@ namespace lab5_1.Objects
         public Action<Marker> OnMarkerOverlap;
         public Action<CollectingPoint> OnPointOverlap;
         public float vX, vY;
-        public Player (float x, float y, float angle) : base(x, y, angle)
+        public Player (float x, float y, float angle, float size) : base(x, y, angle, size)
         {
         }
 
