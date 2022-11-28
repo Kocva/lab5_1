@@ -24,6 +24,7 @@ namespace lab5_1.Objects
             var color = Color.FromArgb(50, Color.Red);
             var b = new SolidBrush(color);
             g.FillEllipse(b, -1 * Size, -1 * Size, 2 * Size, 2 * Size);
+            this.Size += 1;
         }
         public override GraphicsPath GetGraphicsPath()
         {

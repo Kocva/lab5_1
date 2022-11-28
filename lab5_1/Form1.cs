@@ -10,11 +10,11 @@ namespace lab5_1
         CollectingPoint point1;
         CollectingPoint point2;
         BadArea area;
-
+        Random rnd = new Random();
         public Form1()
         {
             InitializeComponent();
-            Random rnd = new Random();
+            
             player = new Player(pictureBox1.Width / 2, pictureBox1.Height / 2, 0, 0);
             area = new BadArea(rnd.Next(20, 480), rnd.Next(20, 480), 0, 1);
             objects.Add(area);
@@ -52,7 +52,9 @@ namespace lab5_1
             point2 = new CollectingPoint(rnd.Next(20, 480), rnd.Next(20, 480), 0, 1);
             objects.Add(point1);
             objects.Add(point2);
+            updatePoints();
             
+
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -61,25 +63,15 @@ namespace lab5_1
             g.Clear(Color.White);
 
             updatePlayer();
-            updatePoints();
-            updateArea();
             foreach (var obj in objects.ToList())
             {
                 if (obj != player && player.Overlaps(obj, g))
                 {
                     player.Overlap(obj);
+                    obj.Overlap(player);
                     
                 }
             }
-            foreach (var obj in objects.ToList())
-            {
-                if (obj != area && area.Overlaps(obj, g))
-                {
-                    area.Overlap(obj);
-
-                }
-            }
-
             foreach (var obj in objects)
             {
                 g.Transform = obj.GetTransform();
@@ -113,16 +105,14 @@ namespace lab5_1
 
         private void updatePoints()
         {
-            point1.SizeIsNull();
-            point2.SizeIsNull();
-            if (point1.Size > 0.02)
-            point1.Size -= (float)0.01;
-            if (point2.Size > 0.02)
-            point2.Size -= (float)0.01;
+            point1.onDeath += onPointDeath;
+            point2.onDeath += onPointDeath;
+
         }
-        private void updateArea()
+        private void onPointDeath (CollectingPoint m)
         {
-            area.Size += 1;
+            m.X = rnd.Next(20, 480);
+            m.Y = rnd.Next(20, 480);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
